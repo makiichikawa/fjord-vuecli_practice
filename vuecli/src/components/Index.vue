@@ -3,7 +3,7 @@
     <v-container>
       <v-row>
         <v-col cols='2'>
-          <Tasks v-bind:memos='memos' />
+          <Memo v-bind:memos='memos' />
           <Button action='add' v-on:flags='sendFlags'/>
         </v-col>
       </v-row>
@@ -13,14 +13,14 @@
 
 <script>
 import Button from './Button.vue'
-import Tasks from './Tasks.vue'
+import Memo from './Memo.vue'
 
 export default {
   name: 'Index',
   props: ['memos'],
   components: {
     Button,
-    Tasks
+    Memo 
   },
   methods: {
     sendFlags(flags) {

@@ -3,7 +3,7 @@
     <v-container>
       <v-row>
         <v-col cols='2'>
-          <Tasks v-bind:memos='memos' />
+          <Memo v-bind:memos='memos' />
         </v-col>
         <v-col cols='10'>
           <Input v-on:memo='setMemo'/>
@@ -17,7 +17,7 @@
 
 <script>
 import Button from './Button.vue'
-import Tasks from './Tasks.vue'
+import Memo from './Memo.vue'
 import Input from './Input.vue'
 
 export default {
@@ -25,7 +25,7 @@ export default {
   props: ['memos'],
   components: {
     Button,
-    Tasks,
+    Memo,
     Input
   },
   data: function() {
