@@ -1,9 +1,9 @@
 <template>
-  <v-card height='250'>
+  <v-card>
     <v-container>
       <v-row>
         <v-col cols='2'>
-          <Tasks/>
+          <Tasks v-bind:memos='memos' />
           <Button action='add' v-on:flags='sendFlags'/>
         </v-col>
       </v-row>
@@ -17,6 +17,7 @@ import Tasks from './Tasks.vue'
 
 export default {
   name: 'Index',
+  props: ['memos'],
   components: {
     Button,
     Tasks

@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div v-for='(todo, index) in todos' :key='index'>
-      <p>{{ todo }}</p>
+    <div v-for='(memo, index) in memos' :key='index'>
+      <p>{{ memo }}</p>
     </div>
   </div>
 </template>
@@ -9,11 +9,7 @@
 <script>
 export default {
   name: 'Tasks',
-  data: function(){
-    return {
-      todos: ['task1', 'task2'],
-    }
-  }
+  props: ['memos']
 }
 </script>
 

@@ -3,10 +3,10 @@
     <v-container>
       <v-row>
         <v-col cols='12'>
-          <Index v-on:flags='setFlags'/>
+          <Index v-bind:memos='memos' v-on:flags='setFlags'/>
         </v-col>
         <v-col cols='12'>
-          <Edit v-if='flags.addFlag'/>
+          <Edit v-if='flags.addFlag' v-bind:memos='memos' v-on:processing='execute'/>
         </v-col>
       </v-row>
     </v-container>
@@ -21,7 +21,13 @@ export default {
   name: 'App',
   data: function() {
     return {
-      flags: {}
+      flags: {},
+      memos: []
+    }
+  },
+  mounted() {
+    if (localStorage.getItem('memos')) {
+      this.memos = JSON.parse(localStorage.getItem('memos'))
     }
   },
   components: {
@@ -31,6 +37,13 @@ export default {
   methods: {
     setFlags(flags) {
       this.flags = flags
+    },
+    execute(processing){
+      if (processing.action === 'edit') {
+        this.memos.push(processing.memo)
+      }
+      const parsed = JSON.stringify(this.memos)
+      localStorage.setItem('memos', parsed)
     }
   }
 }
