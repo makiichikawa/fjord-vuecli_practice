@@ -3,10 +3,10 @@
     <v-container>
       <v-row>
         <v-col cols='12'>
-          <Index v-bind:memos='memos' v-on:flags='setFlags'/>
+          <Index v-bind:memos='memos' v-on:flags='setFlags'  v-on:index='setInit'/>
         </v-col>
         <v-col cols='12'>
-          <Edit v-if='flags.addFlag' v-bind:memos='memos' v-on:processing='execute'/>
+          <Edit v-if='flags.addFlag || flags.editFlag' v-bind:memos='memos' v-on:processing='execute' v-on:index='setInit' v-bind:prevMemo='memo' />
         </v-col>
       </v-row>
     </v-container>
@@ -22,7 +22,9 @@ export default {
   data: function() {
     return {
       flags: {},
-      memos: []
+      memos: {},
+      index: null,
+      memo: ''
     }
   },
   mounted() {
@@ -38,9 +40,19 @@ export default {
     setFlags(flags) {
       this.flags = flags
     },
+    setInit(index) {
+      this.index = Number(index)
+      this.memo = this.memos[index]
+      this.flags = { addFlag: false, editFlag: true, deleteFlag: false } 
+    },
     execute(processing){
       if (processing.action === 'edit') {
-        this.memos.push(processing.memo)
+        if (this.index === null) {
+          this.memos.push(processing.memo)
+        } else {
+          this.$set(this.memos, this.index, processing.memo)
+          this.index = null
+        }
       }
       const parsed = JSON.stringify(this.memos)
       localStorage.setItem('memos', parsed)

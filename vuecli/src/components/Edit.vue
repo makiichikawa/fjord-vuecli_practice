@@ -3,12 +3,12 @@
     <v-container>
       <v-row>
         <v-col cols='2'>
-          <Memo v-bind:memos='memos' />
+          <Memo v-bind:memos='memos' v-on:index='takeOverIndex'/>
         </v-col>
         <v-col cols='10'>
-          <Input v-on:memo='setMemo'/>
-          <Button action='edit' v-on:flags='takeOver'/>
-          <Button action='del' v-on:flags='takeOver'/>
+          <Input v-on:memo='setMemo' v-bind:prevMemo='prevMemo'/>
+          <Button action='edit' v-on:flags='takeOverFlags'/>
+          <Button action='del' v-on:flags='takeOverFlags'/>
         </v-col>
       </v-row>
     </v-container>
@@ -22,7 +22,7 @@ import Input from './Input.vue'
 
 export default {
   name: 'Edit',
-  props: ['memos'],
+  props: ['memos', 'prevMemo'],
   components: {
     Button,
     Memo,
@@ -37,10 +37,13 @@ export default {
     setMemo(memo) {
       this.memo = memo
     },
-    takeOver(flags) {
+    takeOverFlags(flags) {
       if (flags.editFlag) {
         this.$emit('processing',{action: 'edit', memo: this.memo})
       }
+    },
+    takeOverIndex(index) {
+      this.$emit('index', index)
     }
   }
 }

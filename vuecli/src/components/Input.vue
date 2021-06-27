@@ -1,9 +1,9 @@
 <template>
   <v-container fluid>
-    <v-textarea v-model='memo' v-on:mouseleave='takeOver'
+    <v-textarea v-model='memo'
       name="memo"
       label="memo"
-      value="The Woodman set to work at once, and so sharp was his axe that the tree was soon chopped nearly through."
+      value=prevMemo
     ></v-textarea>
   </v-container>
 </template>
@@ -11,14 +11,15 @@
 <script>
 export default {
   name: 'Input',
-  data: function() {
-    return {
-      memo: ''
-    }
-  },
-  methods: {
-    takeOver: function() {
-      this.$emit('memo', this.memo)
+  props: ['prevMemo'],
+  computed: {
+    memo: {
+      get() {
+        return this.$props.prevMemo
+      },
+      set(value) {
+        this.$emit('memo', value)
+      }
     }
   }
 }

@@ -3,7 +3,7 @@
     <v-container>
       <v-row>
         <v-col cols='2'>
-          <Memo v-bind:memos='memos' />
+          <Memo v-bind:memos='memos' v-on:index='takeOverIndex'/>
           <Button action='add' v-on:flags='sendFlags'/>
         </v-col>
       </v-row>
@@ -17,7 +17,10 @@ import Memo from './Memo.vue'
 
 export default {
   name: 'Index',
-  props: ['memos'],
+  props: {
+    memos: {},
+    index: null
+  },
   components: {
     Button,
     Memo 
@@ -25,6 +28,9 @@ export default {
   methods: {
     sendFlags(flags) {
       this.$emit('flags', flags)
+    },
+    takeOverIndex(index) {
+      this.$emit('index', index)
     }
   }
 }
