@@ -40,6 +40,8 @@ export default {
     takeOverFlags(flags) {
       if (flags.editFlag) {
         this.$emit('processing',{action: 'edit', memo: this.memo})
+      } else if (flags.deleteFlag) {
+        this.$emit('processing', {action: 'delete'})
       }
     },
     takeOverIndex(index) {

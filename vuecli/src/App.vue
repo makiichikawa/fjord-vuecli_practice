@@ -53,6 +53,12 @@ export default {
           this.$set(this.memos, this.index, processing.memo)
           this.index = null
         }
+      } else if (processing.action === 'delete') {
+        if (!(this.index === null)) {
+          this.memos.splice(this.index, 1)
+          this.memo = ''
+          this.index = null
+        }
       }
       const parsed = JSON.stringify(this.memos)
       localStorage.setItem('memos', parsed)
