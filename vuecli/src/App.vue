@@ -43,7 +43,7 @@ export default {
     setInit(index) {
       this.index = Number(index)
       this.memo = this.memos[index]
-      this.flags = { addFlag: false, editFlag: true, deleteFlag: false } 
+      this.flags = { addFlag: false, editFlag: true, deleteFlag: false }
     },
     execute(processing){
       if (processing.action === 'edit') {
@@ -53,13 +53,16 @@ export default {
           this.$set(this.memos, this.index, processing.memo)
           this.index = null
         }
+        this.addFlag = false
+        this.editFlag = false
       } else if (processing.action === 'delete') {
         if (!(this.index === null)) {
           this.memos.splice(this.index, 1)
-          this.memo = ''
           this.index = null
         }
+        this.deleteFlag = false
       }
+      this.memo = ' '
       const parsed = JSON.stringify(this.memos)
       localStorage.setItem('memos', parsed)
     }
