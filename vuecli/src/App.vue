@@ -3,10 +3,10 @@
     <v-container>
       <v-row>
         <v-col cols='12'>
-          <Index v-bind:memos='memos' v-on:flags='setFlags'  v-on:index='setInit'/>
+          <Index v-bind:memos='memos' v-on:processing ='executeButtonProcess'  v-on:index='executeMemoProcess'/>
         </v-col>
         <v-col cols='12'>
-          <Edit v-if='flags.addFlag || flags.editFlag' v-bind:memos='memos' v-on:processing='execute' v-on:index='setInit' v-bind:prevMemo='memo' />
+          <Edit v-if='flags.addFlag || flags.editFlag' v-bind:memos='memos' v-on:processing='executeButtonProcess' v-on:index='executeMemoProcess' v-bind:prevMemo='memo' />
         </v-col>
       </v-row>
     </v-container>
@@ -37,16 +37,18 @@ export default {
     Edit
   },
   methods: {
-    setFlags(flags) {
-      this.flags = flags
-    },
-    setInit(index) {
+    executeMemoProcess(index) {
       this.index = Number(index)
       this.memo = this.memos[index]
       this.flags.editFlag = true
     },
-    execute(processing){
-      if (processing.action === 'edit') {
+    executeButtonProcess(processing){
+      if (processing.action === 'add') {
+        this.flags.addFlag = true
+        this.memo = ''
+        this.index = null
+        return
+      } else if (processing.action === 'edit') {
         if (this.index === null) {
           this.memos.push(processing.memo)
         } else {

@@ -7,8 +7,8 @@
         </v-col>
         <v-col cols='10'>
           <Input v-on:memo='setMemo' v-bind:prevMemo='prevMemo'/>
-          <Button action='edit' v-on:flags='takeOverFlags'/>
-          <Button action='del' v-on:flags='takeOverFlags'/>
+          <Button action='edit' v-on:clickedAction='takeOverProcess'/>
+          <Button action='del' v-on:clickedAction='takeOverProcess'/>
         </v-col>
       </v-row>
     </v-container>
@@ -37,10 +37,10 @@ export default {
     setMemo(memo) {
       this.memo = memo
     },
-    takeOverFlags(flags) {
-      if (flags.editFlag) {
+    takeOverProcess(action) {
+      if (action === 'edit') {
         this.$emit('processing',{action: 'edit', memo: this.memo})
-      } else if (flags.deleteFlag) {
+      } else if (action === 'del') {
         this.$emit('processing', {action: 'delete'})
       }
     },

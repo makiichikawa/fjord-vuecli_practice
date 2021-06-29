@@ -4,7 +4,7 @@
       <v-row>
         <v-col cols='2'>
           <Memo v-bind:memos='memos' v-on:index='takeOverIndex'/>
-          <Button action='add' v-on:flags='sendFlags'/>
+          <Button action='add' v-on:clickedAction='takeOverProcess'/>
         </v-col>
       </v-row>
     </v-container>
@@ -26,8 +26,10 @@ export default {
     Memo 
   },
   methods: {
-    sendFlags(flags) {
-      this.$emit('flags', flags)
+    takeOverProcess(action) {
+      if (action === 'add') {
+        this.$emit('processing', {action: 'add'})
+      }
     },
     takeOverIndex(index) {
       this.$emit('index', index)
