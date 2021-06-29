@@ -1,5 +1,6 @@
 <template>
   <v-card>
+    <v-card-subtitle>編集</v-card-subtitle>
     <v-container>
       <v-row>
         <v-col cols='2'>
