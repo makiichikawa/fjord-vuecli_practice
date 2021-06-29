@@ -6,7 +6,7 @@
           <Index v-bind:memos='memos' v-on:processing ='executeButtonProcess'  v-on:index='executeMemoProcess'/>
         </v-col>
         <v-col cols='12'>
-          <Edit v-if='flags.addFlag || flags.editFlag' v-bind:memos='memos' v-on:processing='executeButtonProcess' v-on:index='executeMemoProcess' v-bind:prevMemo='memo' />
+          <Edit v-if='editFlag' v-bind:memos='memos' v-on:processing='executeButtonProcess' v-on:index='executeMemoProcess' v-bind:prevMemo='memo' />
         </v-col>
       </v-row>
     </v-container>
@@ -21,7 +21,7 @@ export default {
   name: 'App',
   data: function() {
     return {
-      flags: { addFlag: false, editFlag: false, deleteFlag: false },
+      editFlag: false,
       memos: {},
       index: null,
       memo: ''
@@ -40,33 +40,21 @@ export default {
     executeMemoProcess(index) {
       this.index = Number(index)
       this.memo = this.memos[index]
-      this.flags.editFlag = true
+      this.editFlag = true
     },
     executeButtonProcess(processing){
       if (processing.action === 'add') {
-        this.flags.addFlag = true
-        this.memo = ''
-        this.index = null
-        return
+        this.memo = '新規メモ'
+        this.memos.push(this.memo)
+        this.index = this.memos.length - 1
       } else if (processing.action === 'edit') {
-        if (this.index === null) {
-          this.memos.push(processing.memo)
-        } else {
-          this.$set(this.memos, this.index, processing.memo)
-          this.index = null
-        }
-        this.flags.addFlag = false
-        this.flags.editFlag = false
+        this.$set(this.memos, this.index, processing.memo)
       } else if (processing.action === 'delete') {
-        if (!(this.index === null)) {
-          this.memos.splice(this.index, 1)
-          this.index = null
-        }
-        this.flags.deleteFlag = false
-        this.flags.editFlag = false
+        this.memos.splice(this.index, 1)
       }
       const parsed = JSON.stringify(this.memos)
       localStorage.setItem('memos', parsed)
+      this.editFlag = false
     }
   }
 }
