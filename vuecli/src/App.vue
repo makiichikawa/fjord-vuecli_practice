@@ -21,7 +21,7 @@ export default {
   name: 'App',
   data: function() {
     return {
-      flags: {},
+      flags: { addFlag: false, editFlag: false, deleteFlag: false },
       memos: {},
       index: null,
       memo: ''
@@ -43,7 +43,7 @@ export default {
     setInit(index) {
       this.index = Number(index)
       this.memo = this.memos[index]
-      this.flags = { addFlag: false, editFlag: true, deleteFlag: false }
+      this.flags.editFlag = true
     },
     execute(processing){
       if (processing.action === 'edit') {
@@ -53,16 +53,16 @@ export default {
           this.$set(this.memos, this.index, processing.memo)
           this.index = null
         }
-        this.addFlag = false
-        this.editFlag = false
+        this.flags.addFlag = false
+        this.flags.editFlag = false
       } else if (processing.action === 'delete') {
         if (!(this.index === null)) {
           this.memos.splice(this.index, 1)
           this.index = null
         }
-        this.deleteFlag = false
+        this.flags.deleteFlag = false
+        this.flags.editFlag = false
       }
-      this.memo = ' '
       const parsed = JSON.stringify(this.memos)
       localStorage.setItem('memos', parsed)
     }
