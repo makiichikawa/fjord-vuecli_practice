@@ -1,6 +1,6 @@
 <template>
   <v-list dense>
-    <v-list-item-group color="primary">
+    <v-list-item-group color="pink">
       <v-list-item
         v-for="(memo, i) in memos"
         :key="i"

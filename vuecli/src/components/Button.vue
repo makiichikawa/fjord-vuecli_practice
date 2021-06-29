@@ -1,5 +1,5 @@
 <template>
-  <button v-on:click="click(action)">{{actionNames(action)}}</button>
+  <v-btn color="pink lighten-5" v-on:click="click(action)">{{actionNames(action)}}</v-btn>
 </template>
 
 <script>
